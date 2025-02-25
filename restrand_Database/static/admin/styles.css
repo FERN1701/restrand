@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.bg-primary {
+    background-color: #271E8C !important;
+}
+
+.image-container {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.login-container {
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-control {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.form-control::placeholder {
+    color: white;
+}
+
+.btn-light {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    width: 200px;
+}
+
+.btn-light:hover {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.text-white {
+    color: white !important;
+}

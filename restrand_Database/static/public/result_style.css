@@ -1,0 +1,53 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.header-section .navbar {
+    background-color: #343a40;
+}
+
+.results-section {
+    margin-top: 50px;
+}
+
+.results-section .progress-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.results-section .progress-indicator .circle {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.results-section .progress-indicator .circle.filled {
+    background-color: #007bff;
+}
+
+.results-section .progress-indicator .line {
+    width: 100px;
+    height: 2px;
+    background-color: #ccc;
+}
+
+.results-box {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+
+.result-item {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.results-box .btn {
+    width: 100%;
+}

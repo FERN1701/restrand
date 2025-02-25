@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReStrand - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'admin/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <script>
+		{% for m in messages  %}
+		{% if 'success' in m.tags %}
+		Swal.fire({
+		  position: 'center',
+		  icon: 'success',
+		  title: '{{m}}',
+		  showConfirmButton: false,
+		  timer: 1500
+		})
+		{% endif %}
+		{% endfor %}
+		</script>
+		<script>
+		  {% for m in messages  %}
+		  {% if 'error' in m.tags %}
+		  Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: '{{m}}',
+			showConfirmButton: false,
+			timer: 1500
+		  })
+		  {% endif %}
+		{% endfor %}
+	</script>
+    <!-- Sidebar Section -->
+    <div class="d-flex">
+        {% include "admin/sidebar.html" %}
+
+        <!-- Main Content -->
+        <div id="content" class="w-100">
+            {% include "admin/navbar.html" %}
+
+            <div class="container-fluid pt-4" style="background-color: #F5F5F5;">
+                <div class="row mb-3"  style="height: 800px">
+                    
+                    <!-- No. of Predictions Card -->
+                    <div class="col-12">
+                        <div class="card mb-3" style="box-shadow: 0px 1px 2.5px;">
+                           <div class="card-header">
+                                System Settings
+                           </div>
+                           <div class="card-body">
+                                <div class="row" > 
+                                    <div class="col-sm-6 mb-5">
+                                        <h6>About Us</h6>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            {{form.details}}
+                                            <button class="btn btn-primary mt-3" type="submit">Update</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        
+                                        <h6>Team</h6>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-sm-6 mb-3">
+                                                    <label for="">Image</label>
+                                                    {{form2.team_image}}
+                                                </div>
+                                                <div class="col-sm-6 mb-3">
+                                                    <label for="">Name</label>
+                                                    {{form2.team_name}}
+                                                </div>
+                                                <div class="col-sm-12 mb-3">
+                                                    <label for="">Description</label>
+                                                    {{form2.team_description}}
+                                                </div>
+
+                                                <div class="col-sm-4 mb-3">
+                                                    <input type="submit" value="Submit" class="btn btn-primary">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Team Name</th>
+                                                    <th scope="col">Actions</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% if list_team %}
+                                                    {% for team in list_team %}
+                                                    <tr>
+                                                        <th scope="row">{{forloop.counter}}</th>
+                                                        <td>{{team.team_name}}</td>
+                                                        <td>
+                                                            <a href="{% url 'delete_team' pk=team.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="3">No data found</td>
+                                                    </tr>
+                                                {% endif %}
+                                                
+                                                  
+                                                </tbody>
+                                              </table>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div>                                                        
+
+                    <!-- Gender Proportion Chart -->
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="{% static 'admin/dashboard.js' %}"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var data = [{
+            x: [77.5, 80, 82.5, 85, 87.5, 90, 92.5, 95], // Use 'x' instead of 'y' for horizontal orientation
+            type: 'box',
+            boxpoints: false,
+            marker: {
+                color: 'blue'
+            },
+            line: {
+                width: 2
+            },
+            orientation: 'h' // This ensures the box plot is horizontal
+        }];
+
+        var layout = {
+            title: 'Distribution of Grades',
+            xaxis: {
+                title: 'Grades',
+                range: [75, 100] // Adjust based on your data range
+            },
+            yaxis: {
+                showticklabels: false // No y-axis labels needed
+            }
+        };
+
+        Plotly.newPlot('boxPlot', data, layout);
+    });
+</script>
+
+<script>
+    window.onload = function() {
+        var studentCtx = document.getElementById('studentDistributionChart').getContext('2d');
+        
+        var studentDistributionChart = new Chart(studentCtx, {
+            type: 'bar',
+            data: {
+                labels: ['STEM', 'ABM', 'HUMMS', 'GAS', 'TVL'], // Strands
+                datasets: [{
+                    label: 'Number of Students',
+                    backgroundColor: '#1f3b77', // Use a dark blue color for the bars
+                    data: [10000, 5000, 7000, 1000, 8000] // Example data for each strand
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        type: 'logarithmic', // Logarithmic scale for the y-axis
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Students'
+                        },
+                        ticks: {
+                            min: 1, // Minimum tick value
+                            callback: function(value, index, values) {
+                                // Format the y-axis tick labels to match log scale
+                                if (value === 10000) return '10k';
+                                if (value === 1000) return '1k';
+                                if (value === 100) return '100';
+                                if (value === 10) return '10';
+                                if (value === 1) return '1';
+                                return null;
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Strands'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: false,
+                        text: 'Student Distribution'
+                    },
+                    legend: {
+                        display: false // Hide legend for this chart
+                    }
+                }
+            }
+        });
+
+        var genderCtx = document.getElementById('genderDistributionChart').getContext('2d');
+        var genderDistributionChart = new Chart(genderCtx, {
+            type: 'bar',
+            data: {
+                labels: ['STEM', 'ABM', 'HUMMS', 'GAS', 'TVL'], // Strands
+                datasets: [
+                    {
+                        label: 'Male',
+                        backgroundColor: 'blue',
+                        data: [800, 700, 600, 700, 750] // Number of male students per strand
+                    },
+                    {
+                        label: 'Female',
+                        backgroundColor: 'magenta',
+                        data: [400, 300, 500, 400, 600] // Number of female students per strand
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true, // Ensure aspect ratio is maintained
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Students'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Strands'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: false,
+                        text: 'Gender Distribution'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 20,
+                            boxHeight: 2
+                        }
+                    }
+                }
+            }
+        });
+
+        // GPA Distribution Chart
+        var gpaCtx = document.getElementById('gpaDistributionChart').getContext('2d');
+        var gpaDistributionChart = new Chart(gpaCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2.0', '2.25', '2.5', '2.75', '3.0'],
+                datasets: [{
+                    label: 'GPA Distribution',
+                    data: [10, 15, 20, 25, 30],
+                    backgroundColor: '#052c65'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true, // Maintain the default aspect ratio
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // GPA vs Strand Chart
+        var gpaVsStrandCtx = document.getElementById('gpaVsStrandChart').getContext('2d');
+        var gpaVsStrandChart = new Chart(gpaVsStrandCtx, {
+            type: 'line',
+            data: {
+                labels: ['STEM', 'ABM', 'HUMMS', 'GAS', 'TVL'],
+                datasets: [{
+                    label: 'Average GPA',
+                    data: [2.0, 2.5, 2.8, 2.4, 2.9],
+                    borderColor: '#FF6384',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true, // Maintain the default aspect ratio
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    };
+</script>
+
+
+</body>
+
+</html>

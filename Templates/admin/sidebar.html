@@ -1,0 +1,21 @@
+{% load static %}
+
+<nav id="sidebar" class="" style="background-color: #052c65;">
+    <div class="sidebar-header text-center py-4">
+        <h5 class="text-white">RESTRAND - ADMIN</h5>
+    </div>
+    <ul class="list-unstyled components" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <li>
+            <a href="{% url 'administrator' %}" class="text-white" style="text-decoration: none; display: flex; align-items: center;">
+                <i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> <!-- Dashboard icon -->
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'settings' %}" class="text-white" style="text-decoration: none; display: flex; align-items: center;">
+                <i class="fas fa-gear" style="margin-right: 8px;"></i> <!-- Dashboard icon -->
+                 Settings
+            </a>
+        </li>
+    </ul>            
+</nav>

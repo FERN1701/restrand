@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReStrand - Input Grades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'public/recommend_2.css' %}">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header-section">
+        {% include "navbar.html" %}
+    </header>
+
+    <!-- Input Grades Section -->
+    <section class="input-grades-section">
+        <div class="container text-center">
+            <h2 class="text-primary">INPUT YOUR GRADES</h2>
+            <p>We’ll need your performance data to give you the best possible choice!</p>
+            <div class="progress-indicator">
+                <div class="circle"></div>
+                <div class="line"></div>
+                <div class="circle"></div>
+                <div class="line"></div>
+                <div class="circle"></div>
+            </div>
+            <div class="form-container">
+                <form>
+                    <div class="mb-3">
+                        <label for="math" class="form-label">Math:</label>
+                        <input type="text" class="form-control" id="math">
+                    </div>
+                    <div class="mb-3">
+                        <label for="science" class="form-label">Science:</label>
+                        <input type="text" class="form-control" id="science">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">Filipino:</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">English:</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">Araling Panlipunan (Arpan):</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">Music, Arts, Physical Education, and Health (MAPEH):</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">Good Manners and Right Conduct:</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filipino" class="form-label">Technology and Livelihood Education (TLE):</label>
+                        <input type="text" class="form-control" id="filipino">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'form1' %}" class="btn btn-secondary">Back</a>
+                        <a href="{% url 'result' %}" class="btn btn-primary">Submit</a>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
